@@ -1,0 +1,68 @@
+---
+title: "R Programming Project 1"
+author: "Thilini Livera"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+For this project, I'm using a dataset that I downloaded online which consists of sales of different games according to different locations over the years. I will be isolating the sales in North America and plotting it to visualize how the data looks like and make a prediction of the sales for 2025. 
+
+```{R}
+#reading the csv file which has the data we're interested in
+salesData <- read.csv("vgsales.csv")
+```
+
+```{R}
+#using only the NA_sales 
+#creating a vector to isolate the required data
+sales <- salesData$NA_Sales
+```
+
+```{r}
+plot(salesData$Year, salesData$NA_Sales, type = "l", 
+     main = "Sales in North America over time",
+     xlab = "Year",
+     ylab = "Total Sales")
+```
+
+```{r}
+#performing a brute force least squares fit of an affine (y = a + bx) function to this data
+leastSquares_fit <- lm(NA_Sales ~ Year, data = salesData)
+```
+
+```{R}
+#Adding the least squares fit to the plot created
+plot(salesData$Year, salesData$NA_Sales, type = "l", 
+     main = "Sales in North America over time",
+     xlab = "Year",
+     ylab = "Total Sales",
+     col = "red",
+     lwd = 1)
+
+
+lines(salesData$Year, predict(leastSquares_fit), col = "blue", lwd = 2)
+
+
+legend("topright", legend = c("Total Sales", "Linear Fit"),
+       col = c("red", "blue"), lty = 1)
+```
+
+
+```{R}
+# Convert 'Year' to numeric in the original data or wherever it's character
+salesData$Year <- as.numeric(salesData$Year)
+
+# Fit a simple linear regression model to predict sales in 2 years
+model <- lm(NA_Sales ~ Year, data = salesData)
+
+# Using the result of the fits to predict the sales of North America in 2025
+year_2025 <- 2025
+linear_prediction <- predict(model, newdata = data.frame(Year = year_2025))
+
+# Display the prediction
+cat("Predicted sales in 2025:", linear_prediction, "\n")
+```
