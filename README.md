@@ -1,2 +1,1 @@
-# North-AmericanGameSalesTrendsPrediction_R
-In this data visualization project, I analyze game sales data across various locations, focusing on North America and make a prediction using the concept of regression and extrapolation.
+In this data visualization project, I analyze a dataset of game sales across various locations, focusing on North America and make a prediction using the concept of regression and extrapolation. I have used language R for this project and the dataset is uploaded in this respitory. 
